@@ -64,42 +64,102 @@ This runs **after your commits, before pushing**:
 5. 📋 Presents the review report
 6. ✅ Confirms it's safe to push (or flags issues)
 
+---
+
 ## Installation
 
-### Quick Install (recommended)
+### macOS / Linux
 
-Clone this repo into your Antigravity skills and workflows directories:
+**One-line install** (works even without `git` — falls back to `curl` or `wget`):
 
 ```bash
-# Clone the repo
-git clone https://github.com/ManoloZocco/antigravity-code-quality.git /tmp/antigravity-code-quality
-
-# Copy skills
-cp -r /tmp/antigravity-code-quality/skills/code-simplifier ~/.gemini/antigravity/skills/
-cp -r /tmp/antigravity-code-quality/skills/code-review ~/.gemini/antigravity/skills/
-
-# Copy workflow
-cp /tmp/antigravity-code-quality/workflows/pre-push.md ~/.gemini/antigravity/global_workflows/
-
-# Clean up
-rm -rf /tmp/antigravity-code-quality
+curl -fsSL https://raw.githubusercontent.com/ManoloZocco/antigravity-code-quality/main/install.sh | bash
 ```
 
-### Manual Install
+Or if you prefer not to pipe to bash:
 
-1. Copy `skills/code-simplifier/SKILL.md` to `~/.gemini/antigravity/skills/code-simplifier/SKILL.md`
-2. Copy `skills/code-review/SKILL.md` to `~/.gemini/antigravity/skills/code-review/SKILL.md`
-3. Copy `workflows/pre-push.md` to `~/.gemini/antigravity/global_workflows/pre-push.md`
+```bash
+# Download and inspect the script first
+curl -fsSL https://raw.githubusercontent.com/ManoloZocco/antigravity-code-quality/main/install.sh -o install.sh
+cat install.sh       # review it
+bash install.sh      # run it
+```
+
+**With Homebrew** (if you have `git` via brew):
+
+```bash
+git clone https://github.com/ManoloZocco/antigravity-code-quality.git /tmp/acq
+bash /tmp/acq/install.sh
+rm -rf /tmp/acq
+```
+
+### Windows (PowerShell)
+
+**One-line install** (uses `Invoke-WebRequest` built into PowerShell — no `git` required):
+
+```powershell
+irm https://raw.githubusercontent.com/ManoloZocco/antigravity-code-quality/main/install.ps1 | iex
+```
+
+Or download and inspect first:
+
+```powershell
+# Download and review
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/ManoloZocco/antigravity-code-quality/main/install.ps1" -OutFile install.ps1
+Get-Content install.ps1    # review it
+.\install.ps1              # run it
+```
+
+**With winget** (if you need git first):
+
+```powershell
+winget install --id Git.Git -e --source winget
+git clone https://github.com/ManoloZocco/antigravity-code-quality.git $env:TEMP\acq
+& "$env:TEMP\acq\install.ps1"
+Remove-Item -Recurse -Force "$env:TEMP\acq"
+```
+
+### Manual Install (any OS)
+
+If you prefer to copy files manually:
+
+1. Download or clone this repository
+2. Copy `skills/code-simplifier/SKILL.md` to `~/.gemini/antigravity/skills/code-simplifier/SKILL.md`
+3. Copy `skills/code-review/SKILL.md` to `~/.gemini/antigravity/skills/code-review/SKILL.md`
+4. Copy `workflows/pre-push.md` to `~/.gemini/antigravity/global_workflows/pre-push.md`
+
+> **Note:** On Windows, `~` is `%USERPROFILE%` (usually `C:\Users\YourName`).
+
+### What the installer handles
+
+The install scripts automatically handle missing tools:
+
+| Priority | macOS/Linux | Windows |
+|----------|-------------|---------|
+| 1st | `git clone` | `git clone` |
+| 2nd | `curl` + `unzip`/`tar` | `Invoke-WebRequest` (built-in) |
+| 3rd | `wget` + `tar` | — |
+| 4th | Local copy (if run from repo) | Local copy (if run from repo) |
+
+If none of these work, the script tells you exactly what to install and how.
 
 ### Verify Installation
 
-After installing, Antigravity should list the new skills and workflow. You can verify by checking:
-
 ```bash
+# macOS/Linux
 ls ~/.gemini/antigravity/skills/code-simplifier/SKILL.md
 ls ~/.gemini/antigravity/skills/code-review/SKILL.md
 ls ~/.gemini/antigravity/global_workflows/pre-push.md
 ```
+
+```powershell
+# Windows
+Test-Path "$env:USERPROFILE\.gemini\antigravity\skills\code-simplifier\SKILL.md"
+Test-Path "$env:USERPROFILE\.gemini\antigravity\skills\code-review\SKILL.md"
+Test-Path "$env:USERPROFILE\.gemini\antigravity\global_workflows\pre-push.md"
+```
+
+---
 
 ## Usage
 
@@ -136,6 +196,8 @@ You can tell Antigravity to focus on specific aspects:
 - *"Focus the code review on security"*
 - *"Focus on performance issues"*
 - *"Check for accessibility issues"*
+
+---
 
 ## Architecture Decisions
 
