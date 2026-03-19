@@ -85,14 +85,6 @@ cat install.sh       # leggilo
 bash install.sh      # eseguilo
 ```
 
-**Con Homebrew** (se hai `git` via brew):
-
-```bash
-git clone https://github.com/ManoloZocco/antigravity-code-quality.git /tmp/acq
-bash /tmp/acq/install.sh
-rm -rf /tmp/acq
-```
-
 ### Windows (PowerShell)
 
 **Installazione con un comando** (usa `Invoke-WebRequest` integrato in PowerShell — non serve `git`):

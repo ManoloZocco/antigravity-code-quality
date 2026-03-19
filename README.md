@@ -85,14 +85,6 @@ cat install.sh       # review it
 bash install.sh      # run it
 ```
 
-**With Homebrew** (if you have `git` via brew):
-
-```bash
-git clone https://github.com/ManoloZocco/antigravity-code-quality.git /tmp/acq
-bash /tmp/acq/install.sh
-rm -rf /tmp/acq
-```
-
 ### Windows (PowerShell)
 
 **One-line install** (uses `Invoke-WebRequest` built into PowerShell — no `git` required):
